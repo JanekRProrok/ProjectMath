@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+<!--
+  _   _      _ _       _ 
+ | | | | ___| | | ___ | |
+ | |_| |/ _ \ | |/ _ \| |
+ |  _  |  __/ | | (_) |_|
+ |_| |_|\___|_|_|\___/(_)
+
+ (c) 2020 JanekR_Prorok
+
+-->
+<!-- Ninejsza strona powstała wyłącznie w celach edukacyjnych. Wszystkie materiały w niej zawarte należą do ich prawnych właścicieli i zostały wykorzystane zgodnie z art. 29 ust. 1 ustawy z dnia 4 lutego 1994 r. o prawie autorskim i prawach pokrewnych (Dz.U. 1994 Nr 24 poz. 83 z późn. zm.).
+
+
+Kod źródłowy: https://github.com/JanekRProrok/ProjectMath
+-->
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="content-language" content="pl">
+	<meta name="author" content="JanekR_Prorok">
+	<meta http-equiv="Cache-Control" content="no-store">
+	<meta name ="description" content="Strona internetowa wykonana na projekt edukacyjny.">
+	<link rel="Shortcut icon" href="ikona.ico" />
+	<link rel="stylesheet" href="style.css">
+	
+	<link href="https://fonts.googleapis.com/css?family=Poppins:500,700,800,900&amp;subset=latin-ext" rel="stylesheet">
+	
+	<title>ProjectMath</title>
+</head>
+
+<body>
+<!-- Back to Top - Button -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
+	<a id="button"></a>
+<!-- /Back to Top - Button -->
+
+
+	<header>
+	<div class="nav-brand">
+		<a href="./index.html"><img src="./images/nav-brand.png" width="66px" margin-top="2px" id="nav-brand" style="filter: brightness(1);"></a>
+		<a href="./index.html" id="nav-title"> ProjectMath</a>
+		<nav id="Spis">
+			<a href="./index.html">Strona główna</a>
+			<a href="./mzer.html">Miejsce zerowe</a>
+			<a href="./wpier.html" style="border-bottom-color: rgb(170,0,0)">Pierwiastek<sup>2</sup></a>
+			<a href="./pole.html">Pole obszaru</a>
+		</nav>
+	</div>
+	</header>
+	
+	<main>
+
+		<section id="Wprowadzenie">
+			<h1>Obliczanie wartości pierwiastka</h1><br>
+            <p> Kolejnym zastosowaniem prostych algorytmów numerycznych jest obliczanie wartości pierwiastka kwadratowego.</p>
+            
+			<h2>Metody obliczania</h2>
+
+<!-- Tab links -->
+<div class="tab">
+	<button class="tablinks" onclick="openCity(event, 'Metoda polowienia')" id="defaultOpen">Metoda połowienia przedziału</button>
+	<button class="tablinks" onclick="openCity(event, 'Metoda Herona')">Metoda Herona</button>
+</div>
+  
+<!-- Tab content -->
+  <div id="Metoda polowienia" class="tabcontent">
+	<h3>Metoda połowienia przedziału</h3>
+	<p>Jest to jedna z metod obliczania wartości pierwiastka kwadratowego. Wstępnie szacuje się przedział pierwiastka między znanymi pierwiastkami liczb całkowitych, a następnie, po podzieleniu całego zakresu na pół, dzielimy połowę bliższą prawdzie aż do osiągnięcia żądanej dokładności wyniku.</p>
+	<h3>Przykład programu</h3>
+	<div class="code">
+        
+<pre style="color:#000000;"><span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include </span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">iostream</span><span style="color:#2a00ff; ">&gt;</span>
+    <span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include </span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">math.h</span><span style="color:#2a00ff; ">&gt;</span>
+     
+    <span style="color:#7f0055; font-weight:bold; ">using</span> <span style="color:#7f0055; font-weight:bold; ">namespace</span> std;
+     
+    <span style="color:#7f0055; font-weight:bold; ">int</span> <span style="color:#7f0055; font-weight:bold; ">main</span>() {
+        <span style="color:#7f0055; font-weight:bold; ">float</span> A;
+        <span style="color:#7f0055; font-weight:bold; ">float</span> a, b;
+        <span style="color:#7f0055; font-weight:bold; ">float</span> srodek;
+        <span style="color:#7f0055; font-weight:bold; ">float</span> eps = 0.1;
+        
+        <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Podaj liczbe, z ktorej chcesz wyznaczyc pierwiastek: </span><span style="color:#2a00ff; ">"</span>;
+        <span style="color:#7f0055; font-weight:bold; ">cin</span> &gt;&gt; A;
+        
+        <span style="color:#7f0055; font-weight:bold; ">if</span> (A&lt;0){
+            <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">W zbiorze liczb rzeczywistych nie istnieje pierwiastek</span>
+            <span style="color:#2a00ff; ">kwadratowy z liczby ujemnej.</span><span style="color:#2a00ff; ">"</span>;}
+         <span style="color:#7f0055; font-weight:bold; ">else</span> {
+            
+        a = 0;
+        b = A;
+        
+        <span style="color:#7f0055; font-weight:bold; ">while</span>(<span style="color:#7f0055; font-weight:bold; ">fabs</span>(a-b)&gt;eps)
+        {
+            srodek = (a + b) / 2;
+            <span style="color:#7f0055; font-weight:bold; ">if</span>(srodek * srodek &gt; A)
+                b = srodek;
+            <span style="color:#7f0055; font-weight:bold; ">else</span>
+                a = srodek;   
+            <span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">[</span><span style="color:#2a00ff; ">"</span> &lt;&lt; a&lt;&lt; <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">, </span><span style="color:#2a00ff; ">"</span> &lt;&lt; b &lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">)</span><span style="color:#2a00ff; ">"</span>&lt;&lt; <span style="color:#7f0055; font-weight:bold; ">endl</span>;
+        }
+        <span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt; a;
+    }
+        <span style="color:#7f0055; font-weight:bold; ">return</span> 0;
+    }
+    </pre>
+    </div>
+	<div class="progdownload"><a href="./Algorytmy/wpier_mpolowienia.cpp">Program do pobrania</a></div>
+  </div>
+  
+  <div id="Metoda Herona" class="tabcontent">
+	<h3>Metoda Herona</h3>
+	<p>Inaczej nazywana algorytmem Newtona–Raphsona. Jest najbardziej efektywną metodą obliczania pierwiastka kwadratowego z liczby nieujemnej.</p>
+	<h3>Przykład programu</h3>
+	<div class="code">
+        <pre style="color:#000000;">
+            <span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include</span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">iostream</span><span style="color:#2a00ff; ">&gt;</span>
+            <span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include</span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">cmath</span><span style="color:#2a00ff; ">&gt;</span>
+            <span style="color:#7f0055; font-weight:bold; ">using</span> <span style="color:#7f0055; font-weight:bold; ">namespace</span> std;
+            
+            <span style="color:#3f7f59; ">//ustawienie precyzji pierwiastka</span>
+            <span style="color:#7f0055; font-weight:bold; ">const</span> <span style="color:#7f0055; font-weight:bold; ">double</span> eps = 0.000001;
+            
+            <span style="color:#7f0055; font-weight:bold; ">double</span> pierwiastek(<span style="color:#7f0055; font-weight:bold; ">double</span> P, <span style="color:#7f0055; font-weight:bold; ">double</span> eps)
+            {
+                   <span style="color:#7f0055; font-weight:bold; ">double</span> a = 1., b = P;
+                   
+                   <span style="color:#3f7f59; ">//dopoki nie otrzymamy zadanej precyzji</span>
+                   <span style="color:#7f0055; font-weight:bold; ">while</span>(<span style="color:#7f0055; font-weight:bold; ">fabs</span>(a-b)&gt;=eps) 
+                   {
+                       a = (a+b)/2.;   
+                       b = P/a;
+                   }
+             
+                   <span style="color:#7f0055; font-weight:bold; ">return</span> a; 
+            }
+             
+            <span style="color:#7f0055; font-weight:bold; ">int</span> <span style="color:#7f0055; font-weight:bold; ">main</span>()
+            {
+                <span style="color:#7f0055; font-weight:bold; ">double</span> x;
+                <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Podaj liczbe, z ktorej chcesz wyznaczyc pierwiastek: </span><span style="color:#2a00ff; ">"</span>;
+                <span style="color:#7f0055; font-weight:bold; ">cin</span>&gt;&gt;x;
+                <span style="color:#7f0055; font-weight:bold; ">if</span> (x&lt;0){
+                    <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">W zbiorze liczb rzeczywistych nie istnieje pierwiastek</span>
+                    <span style="color:#2a00ff; ">kwadratowy z liczby ujemnej.</span><span style="color:#2a00ff; ">"</span>;
+                } <span style="color:#7f0055; font-weight:bold; ">else</span> {
+                    <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;fixed&lt;&lt;pierwiastek(x, eps); 
+                } 
+                
+                <span style="color:#7f0055; font-weight:bold; ">cin</span>.ignore();
+                <span style="color:#7f0055; font-weight:bold; ">cin</span>.get();
+                <span style="color:#7f0055; font-weight:bold; ">return</span> 0;
+            }
+            </pre>
+            
+	</div>
+	<div class="progdownload"><a href="./Algorytmy/wpier_mNewtona-Raphsona.cpp">Program do pobrania</a></div>
+  </div>
+		</section>
+	</main>
+	
+	<footer>
+		<a href="mailto:janekr.prorok@gmail.com?subject=Wiadomość%20ze%20strony%20ProjectMath">Wiadomość do autora</a>
+	</footer>
+	
+<script> function hide(obj) {
+
+    var el = document.getElementById(obj);
+
+        el.style.display = 'none';
+
+}
+</script>
+	
+<!-- Back to Top - Button -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+		var btn = $('#button');
+
+	$(window).scroll(function () {
+	  if ($(window).scrollTop() > 300) {
+    btn.addClass('show');
+ 	 } else {
+  	  btn.removeClass('show');
+ 	 }
+	});
+
+	btn.on('click', function (e) {
+	  e.preventDefault();
+	  $('html, body').animate({ scrollTop: 0 }, '300');
+	});
+</script>
+<!-- /Back to Top - Button -->
+
+<!-- Tylko na domenie 5v.pl -->
+<script>
+	setTimeout(function () {
+	  if (document.getElementsByClassName('adsbygoogle').length) {
+	    alert(
+	      'Nie wykryto adblocka! Układ strony może być zaburzony przez reklamy. ' +
+		  'Czysty kod źródłowy strony znajdziesz na https://github.com/JanekRProrok/ProjectMath'
+	    )
+	  }
+	}, 7500)
+</script>
+<!-- /Tylko na domenie 5v.pl -->
+
+<script>
+function openCity(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+<script>
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+</html>

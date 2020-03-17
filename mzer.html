@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<!--
+  _   _      _ _       _ 
+ | | | | ___| | | ___ | |
+ | |_| |/ _ \ | |/ _ \| |
+ |  _  |  __/ | | (_) |_|
+ |_| |_|\___|_|_|\___/(_)
+
+ (c) 2020 JanekR_Prorok
+
+-->
+<!-- Ninejsza strona powstała wyłącznie w celach edukacyjnych. Wszystkie materiały w niej zawarte należą do ich prawnych właścicieli i zostały wykorzystane zgodnie z art. 29 ust. 1 ustawy z dnia 4 lutego 1994 r. o prawie autorskim i prawach pokrewnych (Dz.U. 1994 Nr 24 poz. 83 z późn. zm.).
+
+
+Kod źródłowy: https://github.com/JanekRProrok/ProjectMath
+-->
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="content-language" content="pl">
+	<meta name="author" content="JanekR_Prorok">
+	<meta http-equiv="Cache-Control" content="no-store">
+	<meta name ="description" content="Strona internetowa wykonana na projekt edukacyjny.">
+	<link rel="Shortcut icon" href="ikona.ico" />
+	<link rel="stylesheet" href="style.css">
+	
+	<link href="https://fonts.googleapis.com/css?family=Poppins:500,700,800,900&amp;subset=latin-ext" rel="stylesheet">
+	
+	<title>ProjectMath</title>
+</head>
+
+<body>
+<!-- Back to Top - Button -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
+	<a id="button"></a>
+<!-- /Back to Top - Button -->
+
+
+	<header>
+	<div class="nav-brand">
+		<a href="./index.html"><img src="./images/nav-brand.png" width="66px" margin-top="2px" id="nav-brand" style="filter: brightness(1);"></a>
+		<a href="./index.html" id="nav-title"> ProjectMath</a>
+		<nav id="Spis">
+			<a href="./index.html">Strona główna</a>
+			<a href="./mzer.html" style="border-bottom-color: rgb(170,0,0)">Miejsce zerowe</a>
+			<a href="./wpier.html">Pierwiastek<sup>2</sup></a>
+			<a href="./pole.html">Pole obszaru</a>
+		</nav>
+	</div>
+	</header>
+	
+	<main>
+
+		<section id="Wprowadzenie">
+			<h1>Obliczanie miejsc zerowych funkcji</h1><br>
+			<p> Jednym z takich algorytmów numerycznych jest algorytm wyznaczający miejsce zerowe funkcji.</p>
+            
+<h2>Metoda połowienia</h2>
+	<p>Jest to najprostsza z metod wyznaczania miejsca zerowego funkcji. Polega ona na dzieleniu zadanego przedziału na połowy i rozpatrywania tego z dwóch przedziałów, na którego krańcach wartości różnią się znakiem.</p>
+	
+<h3>Wykres przykładowej funkcji</h3>
+	<div class="wykres">
+	<img src="./images/mzer.png">
+	</div>
+
+	<h3>Przykład programu</h3>
+	<div class="code">
+
+<pre style="color:#000000;">
+	<span style="color:#3f7f59; ">// Program znajduje miejsce zerowe funkcji f(x)</span>
+	<span style="color:#3f7f59; ">// za pomoca algorytmu polowienia - bisekcji</span>
+	<span style="color:#3f7f59; ">//---------------------------------------------</span>
+	<span style="color:#3f7f59; ">// (C)2006 mgr J.Walaszek       I LO w Tarnowie</span>
+	
+	<span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include </span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">iostream</span><span style="color:#2a00ff; ">&gt;</span>
+	<span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include </span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">iomanip</span><span style="color:#2a00ff; ">&gt;</span>
+	<span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include </span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">cmath</span><span style="color:#2a00ff; ">&gt;</span>
+	<span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include </span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">cstdlib</span><span style="color:#2a00ff; ">&gt;</span>
+	
+	<span style="color:#7f0055; font-weight:bold; ">using</span> <span style="color:#7f0055; font-weight:bold; ">namespace</span> std;
+	
+	<span style="color:#7f0055; font-weight:bold; ">const</span> <span style="color:#7f0055; font-weight:bold; ">double</span> EPS0 = 0.0000000001; <span style="color:#3f7f59; ">// dokladnosc porownania z zerem</span>
+	<span style="color:#7f0055; font-weight:bold; ">const</span> <span style="color:#7f0055; font-weight:bold; ">double</span> EPSX = 0.0000000001; <span style="color:#3f7f59; ">// dokladnosc wyznaczenia pierwiastka</span>
+	
+	<span style="color:#3f7f59; ">// Funkcja, ktorej miejsce zerowe obliczamy</span>
+	<span style="color:#3f7f59; ">// f(x) = x^3*(x+sin(x^2-1)-1)-1</span>
+	<span style="color:#3f7f59; ">// &lt;-1,0&gt; i &lt;1,2&gt;</span>
+	<span style="color:#3f7f59; ">//-----------------------------------------</span>
+	
+	<span style="color:#7f0055; font-weight:bold; ">double</span> f(<span style="color:#7f0055; font-weight:bold; ">double</span> x)
+	{
+	  <span style="color:#7f0055; font-weight:bold; ">return</span> x * x * x * (x + <span style="color:#7f0055; font-weight:bold; ">sin</span>(x * x - 1) - 1) - 1;
+	}
+	
+	<span style="color:#3f7f59; ">//-----------------------------------------------------</span>
+	<span style="color:#3f7f59; ">// Program glowny</span>
+	<span style="color:#3f7f59; ">//-----------------------------------------------------</span>
+	
+	<span style="color:#7f0055; font-weight:bold; ">int</span> <span style="color:#7f0055; font-weight:bold; ">main</span>()
+	{
+	
+	  <span style="color:#7f0055; font-weight:bold; ">double</span> a,b,x0,fa,fb,f0;
+	
+	  <span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt; <span style="color:#7f0055; font-weight:bold; ">setprecision</span>(5)     <span style="color:#3f7f59; ">// 5 cyfr po przecinku</span>
+		   &lt;&lt; fixed;              <span style="color:#3f7f59; ">// format staloprzecinkowy</span>
+	
+	  <span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt; <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Obliczanie pierwiastka funkcji - metoda bisekcji</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">"</span>
+			  <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">f(x) = x^3*(x+sin(x^2-1)-1)-1</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">"</span>
+			  <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">------------------------------------------------</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">"</span>
+			  <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">(C)2006 mgr Jerzy Walaszek       I LO w Tarnowie</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">"</span>
+			  <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Podaj zakres poszukiwan pierwiastka:</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">"</span>;
+	  <span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt; <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">a = </span><span style="color:#2a00ff; ">"</span>; <span style="color:#7f0055; font-weight:bold; ">cin</span> &gt;&gt; a;
+	  <span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt; <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">b = </span><span style="color:#2a00ff; ">"</span>; <span style="color:#7f0055; font-weight:bold; ">cin</span> &gt;&gt; b;
+	  <span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt; <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">------------------------------------------------</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">"</span>
+			  <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">WYNIK:</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">"</span>;
+	  fa = f(a); fb = f(b);
+	  <span style="color:#7f0055; font-weight:bold; ">if</span>(fa * fb &gt; 0)     <span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt; <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Funkcja nie spelnia zalozen</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">"</span>;
+	  <span style="color:#7f0055; font-weight:bold; ">else</span>
+	  {
+		<span style="color:#7f0055; font-weight:bold; ">while</span>(<span style="color:#7f0055; font-weight:bold; ">fabs</span>(a - b) &gt; EPSX)
+		{
+		  x0 = (a + b) / 2; f0 = f(x0);
+		  <span style="color:#7f0055; font-weight:bold; ">if</span>(<span style="color:#7f0055; font-weight:bold; ">fabs</span>(f0) &lt; EPS0) <span style="color:#7f0055; font-weight:bold; ">break</span>;
+		  <span style="color:#7f0055; font-weight:bold; ">if</span>(fa * f0 &lt; 0) b = x0;
+		  <span style="color:#7f0055; font-weight:bold; ">else</span>
+		  {
+			a = x0; fa = f0;
+		  }
+		}
+		<span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt; <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">x0 = </span><span style="color:#2a00ff; ">"</span> &lt;&lt; <span style="color:#7f0055; font-weight:bold; ">setw</span>(15) &lt;&lt; x0 &lt;&lt; <span style="color:#7f0055; font-weight:bold; ">endl</span>;
+	  }
+	  <span style="color:#7f0055; font-weight:bold; ">cout</span> &lt;&lt; <span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">------------------------------------------------</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">"</span>;
+	  <span style="color:#7f0055; font-weight:bold; ">system</span>(<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">pause</span><span style="color:#2a00ff; ">"</span>);
+	  <span style="color:#7f0055; font-weight:bold; ">return</span> 0;
+	} 
+	</pre>
+	</div>
+	
+	<div class="progdownload"><a href="./Algorytmy/mzer_mpolowienia.cpp">Program do pobrania</a></div>
+	<h3>Zadanie</h3>
+	<p>Wyznacz przykładowy przedział zawierający tylko jeden pierwiastek tej funkcji.</p>
+		</section>
+	</main>
+	
+	<footer>
+		<a href="mailto:janekr.prorok@gmail.com?subject=Wiadomość%20ze%20strony%20ProjectMath">Wiadomość do autora</a>
+	</footer>
+	
+<script> function hide(obj) {
+
+    var el = document.getElementById(obj);
+
+        el.style.display = 'none';
+
+}
+</script>
+	
+<!-- Back to Top - Button -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+		var btn = $('#button');
+
+	$(window).scroll(function () {
+	  if ($(window).scrollTop() > 300) {
+    btn.addClass('show');
+ 	 } else {
+  	  btn.removeClass('show');
+ 	 }
+	});
+
+	btn.on('click', function (e) {
+	  e.preventDefault();
+	  $('html, body').animate({ scrollTop: 0 }, '300');
+	});
+</script>
+<!-- /Back to Top - Button -->
+
+<!-- Tylko na domenie 5v.pl -->
+<script>
+	setTimeout(function () {
+	  if (document.getElementsByClassName('adsbygoogle').length) {
+	    alert(
+	      'Nie wykryto adblocka! Układ strony może być zaburzony przez reklamy. ' +
+		  'Czysty kod źródłowy strony znajdziesz na https://github.com/JanekRProrok/ProjectMath'
+	    )
+	  }
+	}, 7500)
+</script>
+<!-- /Tylko na domenie 5v.pl -->
+
+</body>
+</html>

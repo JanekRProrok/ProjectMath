@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<!--
+  _   _      _ _       _ 
+ | | | | ___| | | ___ | |
+ | |_| |/ _ \ | |/ _ \| |
+ |  _  |  __/ | | (_) |_|
+ |_| |_|\___|_|_|\___/(_)
+
+ (c) 2020 JanekR_Prorok
+
+-->
+<!-- Ninejsza strona powstała wyłącznie w celach edukacyjnych. Wszystkie materiały w niej zawarte należą do ich prawnych właścicieli i zostały wykorzystane zgodnie z art. 29 ust. 1 ustawy z dnia 4 lutego 1994 r. o prawie autorskim i prawach pokrewnych (Dz.U. 1994 Nr 24 poz. 83 z późn. zm.).
+
+
+Kod źródłowy: https://github.com/JanekRProrok/ProjectMath
+-->
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="content-language" content="pl">
+	<meta name="author" content="JanekR_Prorok">
+	<meta http-equiv="Cache-Control" content="no-store">
+	<meta name ="description" content="Strona internetowa wykonana na projekt edukacyjny.">
+	<link rel="Shortcut icon" href="ikona.ico" />
+	<link rel="stylesheet" href="style.css">
+	
+	<link href="https://fonts.googleapis.com/css?family=Poppins:500,700,800,900&amp;subset=latin-ext" rel="stylesheet">
+	
+	<title>ProjectMath</title>
+</head>
+
+<body>
+<!-- Back to Top - Button -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
+	<a id="button"></a>
+<!-- /Back to Top - Button -->
+
+
+	<header>
+	<div class="nav-brand">
+		<a href="./index.html"><img src="./images/nav-brand.png" width="66px" margin-top="2px" id="nav-brand" style="filter: brightness(1);"></a>
+		<a href="./index.html" id="nav-title"> ProjectMath</a>
+		<nav id="Spis">
+			<a href="./index.html">Strona główna</a>
+			<a href="./mzer.html">Miejsce zerowe</a>
+			<a href="./wpier.html">Pierwiastek<sup>2</sup></a>
+			<a href="./pole.html" style="border-bottom-color: rgb(170,0,0)">Pole obszaru</a>
+		</nav>
+	</div>
+	</header>
+	
+	<main>
+
+		<section id="Wprowadzenie">
+			<h1>Obliczanie pola obszaru ograniczonego</h1><br>
+            <p> Jeszcze jednym zastosowaniem algorytmów numerycznych jest obliczanie pola obszaru ograniczonego np. wykresem.</p>
+            
+			<h2>Metody obliczania</h2>
+
+<!-- Tab links -->
+<div class="tab">
+	<button class="tablinks" onclick="openCity(event, 'Metoda prostokatow')" id="defaultOpen">Metoda prostokątów</button>
+	<button class="tablinks" onclick="openCity(event, 'Metoda trapezow')">Metoda trapezów</button>
+</div>
+  
+<!-- Tab content -->
+  <div id="Metoda prostokatow" class="tabcontent">
+	<h3>Metoda prostokątów</h3>
+	<p>W celu obliczenia pola obszaru pod wykresem dzielimy je na wiele prostokątów i dodajemy ich pola. Ta metoda nie jest zbyt dokładna ze względu na pomijanie fragmentów przy pochyłych częściach wykresu. Ten problem częściowo rozwiązuje następna z metod.</p>
+    
+    <h3>Przykład podziału obszaru</h3>
+    <div class="wykres"><img src="./images/metodaprostokatow.png"></div>
+    
+    <h3>Przykład programu</h3>
+	<div class="code">
+<pre style="color:#000000;"><span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include</span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">iostream</span><span style="color:#2a00ff; ">&gt;</span>
+    <span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include</span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">iomanip</span><span style="color:#2a00ff; ">&gt;</span>
+    <span style="color:#7f0055; font-weight:bold; ">using</span> <span style="color:#7f0055; font-weight:bold; ">namespace</span> std;
+     
+    <span style="color:#7f0055; font-weight:bold; ">double</span> f(<span style="color:#7f0055; font-weight:bold; ">double</span> x)
+    {
+           <span style="color:#3f7f59; ">//funkcja zawsze przyjmuje wartosci dodatnie</span>
+           <span style="color:#3f7f59; ">//wiec mozna pominac wartosc bezwzgledna</span>
+           <span style="color:#7f0055; font-weight:bold; ">return</span> x*x+x+2;
+    }
+     
+    <span style="color:#7f0055; font-weight:bold; ">double</span> Pole(<span style="color:#7f0055; font-weight:bold; ">int</span> a, <span style="color:#7f0055; font-weight:bold; ">int</span> b, <span style="color:#7f0055; font-weight:bold; ">int</span> n)
+    {
+      <span style="color:#7f0055; font-weight:bold; ">double</span> x = (b-a)/(<span style="color:#7f0055; font-weight:bold; ">double</span>)n; <span style="color:#3f7f59; ">//pierwszy bok - kazdy prostokat ma taki sam</span>
+      <span style="color:#7f0055; font-weight:bold; ">double</span> S = 0.0; <span style="color:#3f7f59; ">//zmienna bedzie przechowywać sume pol trapezow</span>
+      <span style="color:#7f0055; font-weight:bold; ">double</span> srodek = a+(b-a)/(2.0*n); <span style="color:#3f7f59; ">//srodek pierwszego boku</span>
+     
+      <span style="color:#7f0055; font-weight:bold; ">for</span>(<span style="color:#7f0055; font-weight:bold; ">int</span> i=0;i&lt;n;i++)
+      {
+          S+=f(srodek); <span style="color:#3f7f59; ">//obliczenie wysokosci prostokata</span>
+          srodek+=x; <span style="color:#3f7f59; ">//przejscie do nastepnego srodka    </span>
+      }
+      <span style="color:#7f0055; font-weight:bold; ">return</span> S*x;
+    }
+     
+    <span style="color:#7f0055; font-weight:bold; ">int</span> <span style="color:#7f0055; font-weight:bold; ">main</span>()
+    {
+      <span style="color:#7f0055; font-weight:bold; ">int</span> a, b, n;
+      <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Podaj przedzial [a, b]</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">a = </span><span style="color:#2a00ff; ">"</span>;
+      <span style="color:#7f0055; font-weight:bold; ">cin</span>&gt;&gt;a;
+      <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">b = </span><span style="color:#2a00ff; ">"</span>;
+      <span style="color:#7f0055; font-weight:bold; ">cin</span>&gt;&gt;b;
+      <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Podaj liczbe trapezow: </span><span style="color:#2a00ff; ">"</span>;
+      <span style="color:#7f0055; font-weight:bold; ">cin</span>&gt;&gt;n;
+     
+      <span style="color:#7f0055; font-weight:bold; ">if</span>(!(a&lt;b))
+        <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">To nie jest przedzial!</span><span style="color:#2a00ff; ">"</span>;
+      <span style="color:#7f0055; font-weight:bold; ">else</span>
+        <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Pole figury wynosi: </span><span style="color:#2a00ff; ">"</span>&lt;&lt;fixed&lt;&lt;<span style="color:#7f0055; font-weight:bold; ">setprecision</span>(2)&lt;&lt;Pole(a, b, n);  
+     
+     
+      <span style="color:#7f0055; font-weight:bold; ">cin</span>.ignore();
+      <span style="color:#7f0055; font-weight:bold; ">cin</span>.get();
+      <span style="color:#7f0055; font-weight:bold; ">return</span> 0;
+    }
+    </pre>
+    
+    </div>
+	<div class="progdownload"><a href="./Algorytmy/pole_mprostokatow.cpp">Program do pobrania</a></div>
+  </div>
+  
+  <div id="Metoda trapezow" class="tabcontent">
+	<h3>Metoda trapezów</h3>
+	<p>Ta metoda pozwala nam na dokładniejsze przybliżenie pola obszaru pod wykresem, ponieważ trapez o wiele lepiej wpasowuje się w pochyłe fragmenty wykresu.</p>
+    
+    <h3>Przykład podziału obszaru</h3>
+    <div class="wykres"><img src="./images/metodatrapezow.png"></div>
+    
+    <h3>Przykład programu</h3>
+	<div class="code">
+<pre style="color:#000000;"><span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include</span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">iostream</span><span style="color:#2a00ff; ">&gt;</span>
+    <span style="color:#7f0055; ">#</span><span style="color:#7f0055; ">include</span><span style="color:#2a00ff; ">&lt;</span><span style="color:#3f3fbf; ">iomanip</span><span style="color:#2a00ff; ">&gt;</span>
+    <span style="color:#7f0055; font-weight:bold; ">using</span> <span style="color:#7f0055; font-weight:bold; ">namespace</span> std;
+    
+    <span style="color:#7f0055; font-weight:bold; ">double</span> f(<span style="color:#7f0055; font-weight:bold; ">double</span> x)
+    {
+        <span style="color:#3f7f59; ">//funkcja zawsze przyjmuje wartosci dodatnie</span>
+        <span style="color:#3f7f59; ">//wiec mozna pominac wartosc bezwzgledna</span>
+        <span style="color:#7f0055; font-weight:bold; ">return</span> x*x+x+2;
+    }
+    
+    <span style="color:#7f0055; font-weight:bold; ">double</span> Pole(<span style="color:#7f0055; font-weight:bold; ">int</span> a, <span style="color:#7f0055; font-weight:bold; ">int</span> b, <span style="color:#7f0055; font-weight:bold; ">int</span> n)
+    {
+        <span style="color:#7f0055; font-weight:bold; ">double</span> h = (b-a)/(<span style="color:#7f0055; font-weight:bold; ">double</span>)n; <span style="color:#3f7f59; ">//wysokosc trapezow</span>
+        <span style="color:#7f0055; font-weight:bold; ">double</span> S = 0.0; <span style="color:#3f7f59; ">//zmienna bedzie przechowywac sume pol trapezow</span>
+        <span style="color:#7f0055; font-weight:bold; ">double</span> podstawa_a = f(a), podstawa_b;
+            
+        <span style="color:#7f0055; font-weight:bold; ">for</span>(<span style="color:#7f0055; font-weight:bold; ">int</span> i=1;i&lt;=n;i++)
+        {
+            podstawa_b = f(a+h*i);
+            S += (podstawa_a+podstawa_b);
+            podstawa_a = podstawa_b;
+        }
+        <span style="color:#7f0055; font-weight:bold; ">return</span> S*0.5*h;
+    }
+    
+    <span style="color:#7f0055; font-weight:bold; ">int</span> <span style="color:#7f0055; font-weight:bold; ">main</span>()
+    {
+        <span style="color:#7f0055; font-weight:bold; ">int</span> a, b, n;
+        <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Podaj przedzial &lt;a , b&gt;</span><span style="color:#2a00ff; ">\n</span><span style="color:#2a00ff; ">a = </span><span style="color:#2a00ff; ">"</span>;
+        <span style="color:#7f0055; font-weight:bold; ">cin</span>&gt;&gt;a;
+        <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">b = </span><span style="color:#2a00ff; ">"</span>;
+        <span style="color:#7f0055; font-weight:bold; ">cin</span>&gt;&gt;b;
+        <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Podaj liczbe trapezow: </span><span style="color:#2a00ff; ">"</span>;
+        <span style="color:#7f0055; font-weight:bold; ">cin</span>&gt;&gt;n;
+        
+        <span style="color:#7f0055; font-weight:bold; ">if</span>(!(a&lt;b))
+            <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">To nie jest przedzial!</span><span style="color:#2a00ff; ">"</span>;
+        <span style="color:#7f0055; font-weight:bold; ">else</span>
+            <span style="color:#7f0055; font-weight:bold; ">cout</span>&lt;&lt;<span style="color:#2a00ff; ">"</span><span style="color:#2a00ff; ">Pole figury wynosi: </span><span style="color:#2a00ff; ">"</span>&lt;&lt;fixed&lt;&lt;<span style="color:#7f0055; font-weight:bold; ">setprecision</span>(2)&lt;&lt;Pole(a, b, n);	
+    
+        
+        <span style="color:#7f0055; font-weight:bold; ">cin</span>.ignore();
+        <span style="color:#7f0055; font-weight:bold; ">cin</span>.get();
+        <span style="color:#7f0055; font-weight:bold; ">return</span> 0;
+    }
+    </pre>
+      
+	</div>
+	<div class="progdownload"><a href="./Algorytmy/pole_mtrapezow.cpp">Program do pobrania</a></div>
+  </div>
+  <h3>Zadanie</h3>
+  <p>Oblicz pole obszaru przy użyciu różnych parametrów i porównaj dokładność obu metod.</p>
+		</section>
+	</main>
+	
+	<footer>
+		<a href="mailto:janekr.prorok@gmail.com?subject=Wiadomość%20ze%20strony%20ProjectMath">Wiadomość do autora</a>
+	</footer>
+	
+<script> function hide(obj) {
+
+    var el = document.getElementById(obj);
+
+        el.style.display = 'none';
+
+}
+</script>
+	
+<!-- Back to Top - Button -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+		var btn = $('#button');
+
+	$(window).scroll(function () {
+	  if ($(window).scrollTop() > 300) {
+    btn.addClass('show');
+ 	 } else {
+  	  btn.removeClass('show');
+ 	 }
+	});
+
+	btn.on('click', function (e) {
+	  e.preventDefault();
+	  $('html, body').animate({ scrollTop: 0 }, '300');
+	});
+</script>
+<!-- /Back to Top - Button -->
+
+<!-- Tylko na domenie 5v.pl -->
+<script>
+	setTimeout(function () {
+	  if (document.getElementsByClassName('adsbygoogle').length) {
+	    alert(
+	      'Nie wykryto adblocka! Układ strony może być zaburzony przez reklamy. ' +
+		  'Czysty kod źródłowy strony znajdziesz na https://github.com/JanekRProrok/ProjectMath'
+	    )
+	  }
+	}, 7500)
+</script>
+<!-- /Tylko na domenie 5v.pl -->
+
+<script>
+function openCity(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+<script>
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+</html>
